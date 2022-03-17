@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+<h1>{{ formName }}</h1>
+
+{{ form(dataform) }}
+{% if tagId is defined %}
+  {# {{ tagId }}  {{ name }} #}
+{% else %}
+   no
+{% endif %}
+{% endblock %}

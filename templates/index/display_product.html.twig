@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page du produit {% endblock %}
+
+{% block body %}
+<div class="tableContainer">
+    <table>
+        <tr>
+            <td>
+                <h2>{{ product.name }}</h2>
+                <div >
+                     <img src="{{ asset('assets/img/placeholders/'~product.thumbnail)}}" alt="{{ product.name }}"/>
+                </div>
+                <div>
+                   <p>Catégorie:
+                   
+                   {{ product.category.name }} 
+                   {# ou {{ product.category.name }} #}
+                   </p>
+                </div>
+                <div>
+                   <p>Tags:</p>
+                </div>
+            </td>
+            <td>
+                <h2>{{ product.name }}</h2>
+                 <div>
+                   <p>Catégorie:{{ product.category.name }} </p>
+                </div>
+                <div>
+                   <p>{{ product.description }}</p>
+                </div>
+                 <div>
+                   <p>Prix:{{ product.price|number_format(2,',') }} €</p>
+                </div>
+                 <div>
+                   <p>Stock:{{ product.stock }}</p>
+                </div>
+                <button>Acheter</button>
+              
+            </td>
+        </tr>
+        
+    </table>
+    
+</div>
+
+
+  
+       
+      
+    
+{% endblock %}

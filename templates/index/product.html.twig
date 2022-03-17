@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page du produit {{ productId }}{% endblock %}
+
+{% block body %}
+<div class="tableContainer">
+    <table>
+        <tr>
+            <td>
+               
+                <div >
+                     <img src="{{ asset('assets/img/placeholders/'~product.thumbnail)}}" alt="{{ product.name }}"/>
+                </div>
+                <div>
+                   <p>Catégorie:
+                   
+                   {# {{ category }}  #}
+                    {{ product.category.name }}
+                   </p>
+                </div>
+                <div>
+                <p>Tags:
+                {% if product.tags is not empty %}
+                
+                   {% for tag in product.tags %}
+                   <a href="{{ path('index_tag',{'tagId':tag.id})}}">{{ tag.name }}</a>,
+                   {% endfor %}
+                  
+                {% else %}
+                  <div>Il n'y a pas de tag</div>
+                {% endif %}
+                </p>
+                </div>
+            </td>
+            <td>
+                <h2>{{ product.name }}</h2>
+                 <div>
+                   {# <p>Catégorie:{{ category }} </p> #}
+                    <p>Catégorie:{{ product.category.name }} </p>
+                </div>
+                <div>
+                   <p>{{ product.description }}</p>
+                </div>
+                 <div>
+                   <p>Prix:{{ product.price }} €</p>
+                </div>
+                 <div>
+                   <p>Stock:{{ product.stock }}</p>
+                </div>
+                {# is_granted('ROLE_CLIENT'): si un client (pas admin)
+                est connecté alors on affiche le formulaire d'achat #}
+                {# {% if is_granted('ROLE_CLIENT')  %} #}
+                {% if user is defined %}
+                {% if product.stock > 0 %}
+
+                {# <a href="{{ path('buy_product',{'productId':product.id})}}"><button>Acheter</button></a> #}
+                {{ form(dataform) }}
+                {% else %}
+                <div><p>Produit en rupture de stock</p></div>
+                {% endif %}
+                {% endif %}
+                {# {% if stock is defined %}
+                {{ stock }}
+                {% endif %} #}
+            </td>
+        </tr>
+        
+    </table>
+      {{ dump(user) }}
+</div>
+
+
+  
+       
+      
+    
+{% endblock %}

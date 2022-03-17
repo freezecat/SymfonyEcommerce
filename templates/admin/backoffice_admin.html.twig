@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page back office administrateur{% endblock %}
+
+{% block body %}
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">{{ selectedCategory.name }} hezfuiz</h2>
+    <p class="w3-opacity"><i> liste des produits </i></p>
+    <p class="w3-justify">
+     {{ selectedCategory.description }}
+    </p>
+    <a href="{{ path('create_product') }}"><button>Créer un produit</button></a>
+    <a href="{{ path('tag_create') }}"><button style="background:green;">Créer Tag</button></a>
+     <a href="{{ path('category_generate') }}"><button style="background:red;">Générer catégories</button></a>
+    {% if products is not empty %}
+    <div class="w3-row w3-padding-32">
+    {% for product in products %}  
+      <div class="w3-third">  
+        <p>{{ product.name }}</p>
+        <img src="{{ asset('assets/img/placeholders/' ~ product.thumbnail) }}" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+        {% if product.category is not null %}
+        <div>categorie:{{ product.category.name }}</div>
+        {% else %}
+        <div>Non catégorisé</div>
+        {% endif %}
+        <a href="{{ path('update_product',{'produitId':product.id}) }}"><button>Modifier</button></a>
+        <a href="{{ path('delete_product',{'produitId':product.id}) }}"><button>Supprimer</button></a>
+      </div>
+      
+    {% endfor %}
+    </div>
+    {% else %}
+    <div>Il n'y a aucun produit à afficher</div>
+    {% endif %}
+    <hr>
+    <h1>Liste des tags</h1>
+    {% if tags is not empty %}
+      {% for tag in tags %}
+         <div>
+            <table style="border:1px solid black; border-collapse:collapse;width:80vw;margin:auto;">
+               <tr>
+                   <td style="width:40vw;border:1px solid black;">{{ tag.name }}</td>
+                   <td style="width:20vw;border:1px solid black;"><a href="{{ path('tag_update',{'tagId':tag.id}) }}"><button>Modifier</button></a></td>
+                   <td style="width:20vw;border:1px solid black;"><a href="{{ path('tag_delete',{'tagId':tag.id}) }}"><button>Supprimer</button></a></td>
+               </tr>
+        
+            </table>
+         </div>
+      {% endfor %}
+    {% else %}
+    <div>Il n'y a pas de tag</div>
+    {% endif %}
+  </div>
+{% endblock %}

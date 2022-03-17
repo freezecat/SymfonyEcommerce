@@ -1,0 +1,32 @@
+/* body {font-family: "Lato", sans-serif; background:lightcyan;}
+.mySlides {display: none}
+
+.tableContainer{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    padding-top:3rem;
+    padding-bottom:3rem;
+}
+table,tr,td,img{
+    border:1px solid black;
+}
+td:nth-child(1){
+   text-align:center;
+   width:60vw;
+}
+td:nth-child(2){
+    text-align:center;
+    width:30vw;
+}
+a{
+    cursor:pointer;
+}
+button{
+    cursor:pointer;
+    border:none;
+    background:red;
+    padding:10px;
+    color:white;
+    border-radius:10px;
+} */

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{% endblock %}
+
+{% block body %}
+{# Préparation de notre gabarit/template Twig:
+Utiliser le template "The Band", proposé par w3schools, afin de préparer l'aspect View
+de notre application.
+Récuperer le code source de la page, et adapter nos fichiers Twig de manière à pouvoir
+intégrer les différents éléments présentés.Placer les différentes parties de la page
+web dans des fichiers twig appropriés (le header dans un fichier header.html.twig, etc.).
+Placer la section The Band Section à l'intérieur du Block body de index.html.twig.
+Ne pas importer les images, et ne pas conserver la section Carousel ET Automatic slideshow
+Utiliser les placeholders pour remplacer les vignettes des membres du groupe fictionnel.
+
+1 ->https://www.w3schools.com/w3css/tryw3css_templates_band.htm
+2 -> https://drive.google.com/file/d/1kx6kp4CbodefTSboBNe-Q-ZpH461S1uH/view?usp=sharing
+ si pb avec assets => terminal : composer remove symfony/webpack-encore-bundle
+
+ #}
+
+  <!-- The Band Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">{{ selectedCategory.name }}</h2>
+    {% if user is defined and is_granted('ROLE_USER') %}
+       <p class="w3-justify">Bienvenu {{ user.username }}!</p>
+    {% endif %}
+    <p class="w3-opacity"><i> liste des produits </i></p>
+     {% if selectedCategory.description is defined %}
+       <p class="w3-justify">{{ selectedCategory.description }}</p>
+     {% endif %}
+    <div class="w3-row w3-padding-32">
+    {% for product in products %}
+      <div class="w3-third">  
+        <p>{{ product.name }}</p>
+        <img src="{{ asset('assets/img/placeholders/' ~ product.thumbnail) }}" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+        <div> <a href="{{ path('display_product',{'productId':product.id}) }}">Voir le produit</a></div>
+      </div>
+      
+    {% endfor %}
+    </div>
+  </div>
+{% endblock %}

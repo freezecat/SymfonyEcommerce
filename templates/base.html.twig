@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<html lang="en">
+<head>
+    <title>{% block title %}Symfony eCommerce{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/w3.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+        body {font-family: "Lato", sans-serif}
+        .mySlides {display: none}
+        </style>
+    {% endblock %}
+</head>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<body>
+
+{% include 'layout/header.html.twig' %}
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  {# Un Flashbag est message supprimé après afficahge. Notre boucle for ici, chargée à chaque utilisation de base.html.twig, permet d'afficher le en évidence #}
+  {% for message in app.session.flashbag.get('info') %}
+    <div class="w3-panel w3-pale-{{ app.session.get('status') }}" style="max-width:800px; margin:auto;">
+      <h3>{{ app.session.get('message_title') }}</h3>
+      <p>{{ message }}</p>
+    </div>
+  {% endfor %}
+
+  {% block body %}{% endblock %}
+
+  {% include 'layout/contact.html.twig' %}
+  {% include 'layout/footer.html.twig' %}
+
+<!-- End Page Content -->
+</div>
+
+{% block javascripts %}
+    <script>
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById('ticketModal');
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
+    </script>
+{% endblock %}
+</body>
+
 </html>

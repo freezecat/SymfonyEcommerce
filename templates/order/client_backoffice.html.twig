@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page back office  client (version administrateur){% endblock %}
+
+{% block body %} 
+
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Commande en attente (statut panier)</h2>
+    {% if orderPanier is not empty %}
+          
+        <table class="w3-row w3-padding-32">
+            <tr>
+                <th>Utilisateur: (Inconnu)</th>
+                <th>Statut: {{ orderPanier.status|capitalize }}</th> 
+                <th>Prix Total: {{ orderPanier.totalPrice|number_format(2,',') }} €</th>
+                <th>
+                    <a href="{{ path('order_validate_client',{'orderId':orderPanier.id}) }}" class="w3-button w3-blue-gray" role="button">
+                    Valider Commande
+                    </a> 
+                </th>
+                <th>
+                    <a href="{{ path('order_delete_client',{'orderId':orderPanier.id}) }}" class="w3-button w3-blue-gray" role="button">
+                    Supprimer Commande
+                    </a>
+                </th>
+            </tr>
+            <!-- Seconde rangée, légende des Reservations -->
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th> 
+                <th>Date d'ajout au Panier</th>
+                <th>Supprimer la Reservation</th
+            </tr>
+            <!-- Reservations -->
+            {% for reservation in orderPanier.reservations %}
+            <tr>
+                <th>{{ reservation.product.name }}</th>
+                <th>{{ reservation.quantity }}</th>
+                <th>{{ reservation.product.price|number_format(2,',') }} €</th>
+                <th>{{ reservation.creationDate|date('d/m/Y à G:i','Europe/Paris') }}</th>
+                <th>
+                    <a href="{{ path('reservation_delete_client',{'reservationId':reservation.id}) }}" class="w3-button w3-red" role="button">Supprimer Reservation</a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+        
+    {% else %}
+    <div>Il n'y a aucune commande en attente (statut panier)</div>
+    {% endif %}
+    </div> 
+    <hr>
+
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Historique des commandes validées</h2>
+    {% if ordersValidees is not empty %}
+        {% for order in ordersValidees %}  
+        <table class="w3-row w3-padding-32">
+            <tr>
+                <th>Utilisateur: (Inconnu)</th> 
+                <th>Statut: {{ order.status|capitalize }}</th> 
+                <th>Prix Total: {{ order.totalPrice|number_format(2,',') }} €</th>
+                
+                <th>
+                    {# <a href="{{ path('order_validate',{'orderId':order.id}) }}" class="w3-button w3-blue-gray" role="button">
+                    Valider Commande
+                    </a>  #}
+                    Initiée le {{ order.creationDate|date('d/m/Y à G:i','Europe/Paris') }}
+                </th>
+                <th>
+                    {# <a href="" class="w3-button w3-blue-gray" role="button">
+                    Supprimer Commande
+                    </a> #}
+                </th>
+            </tr>
+            <!-- Seconde rangée, légende des Reservations -->
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Date d'ajout au Panier</th>
+                {# <th>Supprimer la Reservation</th> #}
+            </tr>
+            <!-- Reservations -->
+            {% for reservation in order.reservations %}
+            <tr>
+                <th>{{ reservation.product.name }}</th>
+                <th>{{ reservation.quantity }}</th>
+                <th>{{ reservation.product.price|number_format(2,',') }} €</th>
+                <th>{{ reservation.creationDate|date('d/m/Y à G:i','Europe/Paris') }}</th>
+                {# <th>
+                    <a href="{{ path('reservation_delete',{'reservationId':reservation.id}) }}" class="w3-button w3-red" role="button">Supprimer Reservation</a>
+                </th> #}
+            </tr> 
+            {% endfor %}
+        </table>
+        {% endfor %}
+    {% else %}
+    <div>Votre historique est vide , vous n'avez pas encore validé de commandes.</div>
+    {% endif %}
+    </div>
+{% endblock %}
